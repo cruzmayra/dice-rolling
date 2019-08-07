@@ -41,6 +41,19 @@ class App extends React.Component {
     light.shadow.mapSize.width = 1024;
     light.shadow.mapSize.height = 1024;
     scene.add(light);
+
+    var floorMaterial = new THREE.MeshPhongMaterial( { color: '#F6E3CE', side: THREE.DoubleSide } );
+    var floorGeometry = new THREE.PlaneGeometry(30, 30, 30, 30);
+    var floor = new THREE.Mesh(floorGeometry, floorMaterial);
+    floor.receiveShadow  = true;
+    floor.rotation.x = Math.PI / 2;
+    scene.add(floor);
+    // SKYBOX/FOG
+    var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
+    var skyBoxMaterial = new THREE.MeshPhongMaterial( { color: 0x9999ff, side: THREE.BackSide } );
+    var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
+    // scene.add(skyBox);
+    scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );
     
     // Setup your cannonjs world
     world = new CANNON.World();
@@ -81,8 +94,8 @@ class App extends React.Component {
       // DiceManager.prepareValues(diceValues);
     }
 
-    setInterval(randomDiceThrow, 3000);
-    randomDiceThrow();
+    // setInterval(randomDiceThrow, 3000);
+    // randomDiceThrow();
     requestAnimationFrame( animate );
 
     function animate() {
