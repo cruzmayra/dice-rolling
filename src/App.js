@@ -14,10 +14,11 @@ class App extends React.Component {
       dice: []
     }
   }
+  
   componentDidMount() {
     this.sceneSetup()
     this.buildSceneObjects()
-    this.setupWorld()
+    this.worldSetup()
     this.animate()
     window.addEventListener('keydown', this.handleThrow);
   }
@@ -28,10 +29,10 @@ class App extends React.Component {
 
   sceneSetup = () => {
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.1, 20000 );
+    this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.01, 20000 );
     this.scene.add(this.camera);
-    this.camera.position.set(10, 50, 30);
-	  this.camera.rotation.x = -0.95;
+    this.camera.position.set(0, 30, 30);
+	  this.camera.rotation.x = -0.80;
 
     this.renderer = new THREE.WebGLRenderer( {antialias:true} );
     this.renderer.setSize( window.innerWidth, window.innerHeight );
@@ -58,11 +59,30 @@ class App extends React.Component {
     light.shadow.mapSize.width = 1024;
     light.shadow.mapSize.height = 1024;
 
-    const floorMaterial = new THREE.MeshPhongMaterial( { color: '#F6E3CE', side: THREE.DoubleSide } );
-    const floorGeometry = new THREE.PlaneGeometry(30, 30, 30, 30);
+    const floorMaterial = new THREE.MeshPhongMaterial( { color: 0xF6E3CE, side: THREE.DoubleSide } );
+    const floorGeometry = new THREE.PlaneGeometry(30, 30, 10, 10);
     const floor = new THREE.Mesh(floorGeometry, floorMaterial);
     floor.receiveShadow  = true;
     floor.rotation.x = Math.PI / 2;
+
+    // const wallMaterial = new THREE.MeshBasicMaterial({ color: '#222222', side: THREE.DoubleSide, transparent: true });
+    // const wallMaterial = new THREE.MeshPhongMaterial( { 
+    //   side: THREE.DoubleSide,
+    //   color: 0xCCCCCC, 
+    //   transparent: true, 
+    //   opacity: 0.25,
+    //   depthWrite: false
+    // } )
+    // const wallGeometry = new THREE.PlaneGeometry(30, 5, 10, 10);
+    // const wall = new THREE.Mesh(wallGeometry, wallMaterial);
+    // wall.receiveShadow = true;
+    // wall.rotation.y = Math.PI / 2;
+    // wall.translateZ(15);
+    // wall.translateY(2.5);
+    // const wall2 = new THREE.Mesh(wallGeometry, wallMaterial);
+    // wall2.receiveShadow = true;
+    // wall2.translateZ(15);
+    // wall2.translateY(2.5);
 
     // SKYBOX/FOG
     const skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
@@ -74,7 +94,7 @@ class App extends React.Component {
   }
 
   // Setup your cannonjs world
-  setupWorld = () => {   
+  worldSetup = () => {   
     this.world = new CANNON.World();
     this.world.gravity.set(0, -9.82 * 20, 0);
     this.world.broadphase = new CANNON.NaiveBroadphase();
@@ -87,11 +107,23 @@ class App extends React.Component {
     floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
     this.world.add(floorBody);
 
+    const wallShape = new CANNON.Box(new CANNON.Vec3(2, 5, 30));
+    const wallBody = new CANNON.Body({ mass: 0 });
+    wallBody.addShape(wallShape);
+    wallBody.position.set(17, 0, 0);
+    this.world.addBody(wallBody);
+
+    const wallShape2 = new CANNON.Box(new CANNON.Vec3(30, 5, 2));
+    const wallBody2 = new CANNON.Body({ mass: 0 });
+    wallBody2.addShape(wallShape2);
+    wallBody2.position.set(0, 0, 17);
+    this.world.addBody(wallBody2);
+
     // Dices
     const { colors,diceNumber } = this.state
     let dice = []
     for (let i = 0; i < diceNumber; i++) {
-      let die = new DiceD6({size: 1.5, backColor: colors[i]});
+      let die = new DiceD6({size: 1.5 , backColor: colors[i]});
       this.scene.add(die.getObject());
       dice.push(die);
       this.setState({
