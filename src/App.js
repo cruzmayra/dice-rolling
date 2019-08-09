@@ -32,7 +32,7 @@ class App extends React.Component {
     this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.01, 20000 );
     this.scene.add(this.camera);
     this.camera.position.set(0, 30, 30);
-	  this.camera.rotation.x = -0.80;
+	  this.camera.rotation.x = -0.95;
 
     this.renderer = new THREE.WebGLRenderer( {antialias:true} );
     this.renderer.setSize( window.innerWidth, window.innerHeight );
@@ -66,23 +66,23 @@ class App extends React.Component {
     floor.rotation.x = Math.PI / 2;
 
     // const wallMaterial = new THREE.MeshBasicMaterial({ color: '#222222', side: THREE.DoubleSide, transparent: true });
-    // const wallMaterial = new THREE.MeshPhongMaterial( { 
-    //   side: THREE.DoubleSide,
-    //   color: 0xCCCCCC, 
-    //   transparent: true, 
-    //   opacity: 0.25,
-    //   depthWrite: false
-    // } )
-    // const wallGeometry = new THREE.PlaneGeometry(30, 5, 10, 10);
-    // const wall = new THREE.Mesh(wallGeometry, wallMaterial);
-    // wall.receiveShadow = true;
-    // wall.rotation.y = Math.PI / 2;
-    // wall.translateZ(15);
-    // wall.translateY(2.5);
-    // const wall2 = new THREE.Mesh(wallGeometry, wallMaterial);
-    // wall2.receiveShadow = true;
-    // wall2.translateZ(15);
-    // wall2.translateY(2.5);
+    const wallMaterial = new THREE.MeshPhongMaterial( { 
+      side: THREE.DoubleSide,
+      color: 0xCCCCCC, 
+      transparent: true, 
+      opacity: 0.25,
+      depthWrite: false
+    } )
+    const wallGeometry = new THREE.PlaneGeometry(30, 5, 10, 10);
+    const wall = new THREE.Mesh(wallGeometry, wallMaterial);
+    wall.receiveShadow = true;
+    wall.rotation.y = Math.PI / 2;
+    wall.translateZ(15);
+    wall.translateY(2.5);
+    const wall2 = new THREE.Mesh(wallGeometry, wallMaterial);
+    wall2.receiveShadow = true;
+    wall2.translateZ(15);
+    wall2.translateY(2.5);
 
     // SKYBOX/FOG
     const skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
@@ -90,7 +90,7 @@ class App extends React.Component {
     const skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
     this.scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );
     
-    this.scene.add( ambient,directionalLight,light,floor,skyBox );
+    this.scene.add( ambient,directionalLight,light,floor,skyBox,wall, wall2 );
   }
 
   // Setup your cannonjs world
