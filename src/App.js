@@ -11,7 +11,10 @@ class App extends React.Component {
     super(props)
     this.state = {
       colors: ['#F7819F', '#ffff00', '#00ff00', '#0000ff', '#ff00ff'],
-      faceTexts: [' ', '0', 'Hola', '2', '3', '4', '5', '6', '7', '8','9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'],
+      faceTexts: [
+        [' ', '0', 'Transparencia', 'Improvement', 'Durabilidad', 'Transformación', 'Aptitud térmica', 'Conversación', '7', '8','9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'],
+        [' ', '0', 'Portabilidad', 'Extensión de uso', 'Estética', 'Ludicidad', 'Almacenabilidad', '---', '7', '8','9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20']
+      ],
       diceNumber: 2,
       dice: []
     }
@@ -52,7 +55,7 @@ class App extends React.Component {
     directionalLight.position.y = 1000;
     directionalLight.position.z = 1000;
 
-    const light = new THREE.SpotLight(0xefdfd5, 1.3);
+    const light = new THREE.SpotLight(0xefdfd5, 0.6);
     light.position.y = 100;
     light.target.position.set(0, 0, 0);
     light.castShadow = true;
@@ -128,7 +131,7 @@ class App extends React.Component {
       let die = new DiceD6Custom({
         size: 4, 
         backColor: colors[i],
-        faceTexts
+        faceTexts: faceTexts[i]
       });
       this.scene.add(die.getObject());
       dice.push(die);
@@ -180,7 +183,6 @@ class App extends React.Component {
       dice[i].getObject().body.angularVelocity.set(20 * Math.random() -10, 20 * Math.random() -10, 20 * Math.random() -10);
       diceValues.push({dice: dice[i], value: i + 1});
     }
-    DiceManager.prepareValues(diceValues);
   }
 
   render () {
