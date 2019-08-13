@@ -3,13 +3,15 @@ import './App.css'
 import * as CANNON from 'cannon';
 import * as THREE from 'three'
 // import { Stats } from 'three-stats';
-import { DiceD6, DiceManager } from 'threejs-dice';
+// import { DiceD6, DiceManager } from 'threejs-dice';
+import {DiceD6Custom, DiceManager} from './helpers/customCube'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       colors: ['#F7819F', '#ffff00', '#00ff00', '#0000ff', '#ff00ff'],
+      faceTexts: [' ', '0', 'Hola', '2', '3', '4', '5', '6', '7', '8','9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'],
       diceNumber: 2,
       dice: []
     }
@@ -120,10 +122,14 @@ class App extends React.Component {
     this.world.addBody(wallBody2);
 
     // Dices
-    const { colors,diceNumber } = this.state
+    const { colors, faceTexts, diceNumber } = this.state
     let dice = []
     for (let i = 0; i < diceNumber; i++) {
-      let die = new DiceD6({size: 2 , backColor: colors[i]});
+      let die = new DiceD6Custom({
+        size: 4, 
+        backColor: colors[i],
+        faceTexts
+      });
       this.scene.add(die.getObject());
       dice.push(die);
       this.setState({
@@ -140,7 +146,7 @@ class App extends React.Component {
 
   updatePhysics = () => {
     const { dice } = this.state
-    this.world.step(1.0 / 60.0);
+    this.world.step(1.0 / 30.0);
     for (var i in dice) {
         dice[i].updateMeshFromBody();
     }
