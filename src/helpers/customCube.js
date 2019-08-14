@@ -331,6 +331,8 @@ class DiceObject {
         let canvas = document.createElement("canvas");
         let context = canvas.getContext("2d");
         let ts = this.calculateTextureSize(this.size / 2 + this.size * this.textMargin) * 2;
+        let x = canvas.width / 2
+        let y = canvas.height / 2
         canvas.width = canvas.height = ts;
         // context.font = ts / (1 + 2 * this.textMargin) + "pt Arial";
         context.font = "18pt Arial";
