@@ -327,24 +327,51 @@ class DiceObject {
         return Math.max(128, Math.pow(2, Math.floor(Math.log(approx) / Math.log(2))));
     }
 
+    wrapText(context, text, x, y, maxWidth, lineHeight) {
+        var words = text.split(' ');
+        var line = '';
+
+        for(var n = 0; n < words.length; n++) {
+          var testLine = line + words[n] + ' ';
+          var metrics = context.measureText(testLine);
+          var testWidth = metrics.width;
+          if (testWidth > maxWidth && n > 0) {
+            context.fillText(line, x, y);
+            line = words[n] + ' ';
+            y += lineHeight;
+          }
+          else {
+            line = testLine;
+          }
+        }
+        context.fillText(line, x, y);
+      }
+
     createTextTexture(text, color, backColor) {
-        let canvas = document.createElement("canvas");
-        let context = canvas.getContext("2d");
-        let ts = this.calculateTextureSize(this.size / 2 + this.size * this.textMargin) * 2;
-        let x = canvas.width / 2
-        let y = canvas.height / 2
-        canvas.width = canvas.height = ts;
-        // context.font = ts / (1 + 2 * this.textMargin) + "pt Arial";
-        context.font = "18pt Arial";
-        context.fillStyle = backColor;
-        context.fillRect(0, 0, canvas.width, canvas.height);
-        context.textAlign = "center";
-        context.textBaseline = "middle";
-        context.fillStyle = color;
-        context.fillText(text, canvas.width / 2, canvas.height / 2);
-        let texture = new THREE.Texture(canvas);
-        texture.needsUpdate = true;
-        return texture;
+      let canvas = document.createElement("canvas");
+      let context = canvas.getContext("2d");
+      let ts = this.calculateTextureSize(this.size / 2 + this.size * this.textMargin) * 2;
+      canvas.width = canvas.height = ts;
+
+      let lineheight = 20;
+      var x = (canvas.width) / 2;
+      var y = (canvas.height) / 3;
+      // context.font = ts / (1 + 2 * this.textMargin) + "pt Arial";
+      context.font = "17pt Arial";
+      context.fillStyle = backColor;
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      context.textAlign = "center";
+      // context.textBaseline = "middle";
+      context.fillStyle = color;
+      // context.fillText(text, canvas.width / 2, canvas.height / 2);
+      let words = text.split(' ');
+      let line = '';
+      for (var i = 0; i<words.length; i++){
+        context.fillText(words[i], canvas.width / 2, canvas.height / 2 + (i*lineheight) );
+      }
+      let texture = new THREE.Texture(canvas);
+      texture.needsUpdate = true;
+      return texture;
     }
 
     getMaterials() {
