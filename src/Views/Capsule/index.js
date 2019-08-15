@@ -126,10 +126,9 @@ class Capsule extends React.Component {
   }
 
   dicesSetup = () => {
-    this.scene.remove(DiceD6Custom.getObject())
+    this.removeDices()
     const { dices } = this.state
     let dice = []
-
     for (let i = 0; i < dices.length; i++) {
       let die = new DiceD6Custom({
         size: 4, 
@@ -143,6 +142,17 @@ class Capsule extends React.Component {
       })
     }
 
+  }
+
+  removeDices = () => {
+    const { dice } = this.state
+    if ( dice.length === 0) {
+      return
+    } else {
+      for (let i = 0; i < dice.length; i++) {
+        this.scene.remove(dice[i].getObject())
+      }
+    }
   }
 
   animate = () => {
