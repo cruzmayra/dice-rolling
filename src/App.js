@@ -4,6 +4,7 @@ import {
   Route,
   Switch
 } from 'react-router-dom'
+import './App.css'
 
 // Views
 import Single from './Views/Single'

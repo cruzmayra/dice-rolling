@@ -9,8 +9,8 @@ class Single extends React.Component {
     this.state = {
       colors: ['#F7819F', '#ffff00', '#00ff00', '#0000ff', '#ff00ff'],
       faceTexts: [
-        [' ', '0', 'Transparencia', 'Improvement', 'Durabilidad', 'Transformación', 'Aptitud térmica', 'Conversación', '7', '8','9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'],
-        [' ', '0', 'Portabilidad', 'Extensión de uso', 'Estética', 'Ludicidad', 'Almacenabilidad', '---', '7', '8','9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20']
+        [' ', '0', 'Transparencia', 'Improvement', 'Durabilidad', 'Transformación', 'Aptitud térmica', 'Conversación'],
+        [' ', '0', 'Portabilidad', 'Extensión de uso', 'Estética', 'Ludicidad', 'Almacenabilidad', '🃏']
       ],
       diceNumber: 2,
       dice: []
