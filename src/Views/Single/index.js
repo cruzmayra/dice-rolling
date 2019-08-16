@@ -148,7 +148,7 @@ class Single extends React.Component {
     const { dice } = this.state
     this.world.step(1.0 / 30.0);
     for (var i in dice) {
-        dice[i].updateMeshFromBody();
+      dice[i].updateMeshFromBody();
     }
   }
 

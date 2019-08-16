@@ -353,19 +353,15 @@ class DiceObject {
       let ts = this.calculateTextureSize(this.size / 2 + this.size * this.textMargin) * 2;
       canvas.width = canvas.height = ts;
 
-      let lineheight = 20;
-      var x = (canvas.width) / 2;
-      var y = (canvas.height) / 3;
-      // context.font = ts / (1 + 2 * this.textMargin) + "pt Arial";
+      let lineheight = 20
       context.font = "17pt Arial";
       context.fillStyle = backColor;
       context.fillRect(0, 0, canvas.width, canvas.height);
       context.textAlign = "center";
-      // context.textBaseline = "middle";
+      context.textBaseline = "middle";
       context.fillStyle = color;
       // context.fillText(text, canvas.width / 2, canvas.height / 2);
       let words = text.split(' ');
-      let line = '';
       for (var i = 0; i<words.length; i++){
         context.fillText(words[i], canvas.width / 2, canvas.height / 2 + (i*lineheight) );
       }

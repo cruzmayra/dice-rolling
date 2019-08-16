@@ -141,7 +141,6 @@ class Capsule extends React.Component {
         dice
       })
     }
-
   }
 
   removeDices = () => {
@@ -153,6 +152,7 @@ class Capsule extends React.Component {
         this.scene.remove(dice[i].getObject())
       }
     }
+    this.updatePhysics();
   }
 
   animate = () => {
@@ -163,7 +163,7 @@ class Capsule extends React.Component {
 
   updatePhysics = () => {
     const { dice } = this.state
-    this.world.step(1.0 / 30.0);
+    this.world.step(1.0 / 40.0);
     for (var i in dice) {
         dice[i].updateMeshFromBody();
     }
