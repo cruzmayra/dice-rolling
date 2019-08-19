@@ -66,7 +66,7 @@ class Capsule extends React.Component {
     light.shadow.mapSize.height = 1024;
 
     const floorMaterial = new THREE.MeshPhongMaterial( { color: 0xF6E3CE, side: THREE.DoubleSide } );
-    const floorGeometry = new THREE.PlaneGeometry(30, 30, 10, 10);
+    const floorGeometry = new THREE.PlaneGeometry(50, 30, 10, 10);
     const floor = new THREE.Mesh(floorGeometry, floorMaterial);
     floor.receiveShadow  = true;
     floor.rotation.x = Math.PI / 2;
@@ -78,16 +78,33 @@ class Capsule extends React.Component {
       opacity: 0.25,
       depthWrite: false
     } )
-    const wallGeometry = new THREE.PlaneGeometry(30, 5, 10, 10);
-    const wall = new THREE.Mesh(wallGeometry, wallMaterial);
-    wall.receiveShadow = true;
-    wall.rotation.y = Math.PI / 2;
-    wall.translateZ(15);
-    wall.translateY(2.5);
-    const wall2 = new THREE.Mesh(wallGeometry, wallMaterial);
+
+    const wallGeometry1 = new THREE.PlaneGeometry(50, 5, 10, 15);
+    const wallGeometry2 = new THREE.PlaneGeometry(30, 5, 10, 15);
+    const wallGeometry3 = new THREE.PlaneGeometry(50, 5, 10, 15);
+    const wallGeometry4 = new THREE.PlaneGeometry(30, 5, 10, 15);
+    
+    const wall1 = new THREE.Mesh(wallGeometry1, wallMaterial);
+    wall1.receiveShadow = true;
+    wall1.translateZ(-15);
+    wall1.translateY(2);
+
+    const wall2 = new THREE.Mesh(wallGeometry2, wallMaterial);
     wall2.receiveShadow = true;
-    wall2.translateZ(15);
+    wall2.rotation.y = Math.PI / 2;
+    wall2.translateZ(25);
     wall2.translateY(2.5);
+
+    const wall3 = new THREE.Mesh(wallGeometry3, wallMaterial);
+    wall3.receiveShadow = true;
+    wall3.translateZ(15);
+    wall3.translateY(2.5);
+
+    const wall4 = new THREE.Mesh(wallGeometry4, wallMaterial);
+    wall4.receiveShadow = true;
+    wall4.rotation.y = Math.PI / 2;
+    wall4.translateZ(-25);
+    wall4.translateY(2.5);
 
     // SKYBOX/FOG
     const skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
@@ -95,7 +112,7 @@ class Capsule extends React.Component {
     const skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
     this.scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );
     
-    this.scene.add( ambient,directionalLight,light,floor,skyBox,wall, wall2 );
+    this.scene.add( ambient,directionalLight,light,floor,skyBox,wall1, wall2, wall3, wall4 );
   }
 
   // Setup your cannonjs world
@@ -112,17 +129,29 @@ class Capsule extends React.Component {
     floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
     this.world.add(floorBody);
 
-    const wallShape = new CANNON.Box(new CANNON.Vec3(2, 5, 30));
-    const wallBody = new CANNON.Body({ mass: 0 });
-    wallBody.addShape(wallShape);
-    wallBody.position.set(17, 0, 0);
-    this.world.addBody(wallBody);
+    const wallShape1 = new CANNON.Box(new CANNON.Vec3(50, 5, 2));
+    const wallBody1 = new CANNON.Body({ mass: 0 });
+    wallBody1.addShape(wallShape1);
+    wallBody1.position.set(0, 0, -17);
+    this.world.addBody(wallBody1);
 
-    const wallShape2 = new CANNON.Box(new CANNON.Vec3(30, 5, 2));
+    const wallShape2 = new CANNON.Box(new CANNON.Vec3(2, 5, 30));
     const wallBody2 = new CANNON.Body({ mass: 0 });
     wallBody2.addShape(wallShape2);
-    wallBody2.position.set(0, 0, 17);
+    wallBody2.position.set(27, 0, 0);
     this.world.addBody(wallBody2);
+
+    const wallShape3 = new CANNON.Box(new CANNON.Vec3(50, 5, 2));
+    const wallBody3 = new CANNON.Body({ mass: 0 });
+    wallBody3.addShape(wallShape3);
+    wallBody3.position.set(0, 0, 17);
+    this.world.addBody(wallBody3);
+
+    const wallShape4 = new CANNON.Box(new CANNON.Vec3(2, 5, 30));
+    const wallBody4 = new CANNON.Body({ mass: 0 });
+    wallBody4.addShape(wallShape4);
+    wallBody4.position.set(-27, 0, 0);
+    this.world.addBody(wallBody4);
   }
 
   dicesSetup = () => {
@@ -191,7 +220,7 @@ class Capsule extends React.Component {
         let yRand = Math.random() * 20
         dice[i].getObject().position.x = -15 - (i % 3) * 1.5;
         dice[i].getObject().position.y = 2 + Math.floor(i / 3) * 1.5;
-        dice[i].getObject().position.z = -15 + (i % 3) * 1.5;
+        dice[i].getObject().position.z = -10 + (i % 3) * 1.5;
         dice[i].getObject().quaternion.x = (Math.random()*90-45) * Math.PI / 180;
         dice[i].getObject().quaternion.z = (Math.random()*90-45) * Math.PI / 180;
         dice[i].updateBodyFromMesh();
