@@ -19,10 +19,10 @@ class Capsule extends React.Component {
   componentDidMount () {
     this.setState({
       layers: {
-        producto: {color: '#ff2164', faceText: [' ', '0', 'Transparencia', 'Improvement', 'Durabilidad', 'Transformación', 'Aptitud térmica', 'Conversación']},
-        consumidor: {color: '#ffdb00', faceText: [' ', '0', 'Portabilidad', 'Extensión de uso', 'Estética', 'Ludicidad', 'Almacenabilidad', '🃏']},
-        sociedad: {color: '#0686cf', faceText: [' ', '0', 'Alianzas', '🃏', 'Beneficios sociales', '🃏', '🃏', '🃏']},
-        planeta:{color: '#70a83b', faceText: [' ', '0', 'Reutilización / Recivlabilidad', '🃏', '🃏', 'Impacto en el ecosistema', '🃏', '🃏']}
+        producto: {color: '#ff2164', faceText: [' ', '0', 'Transparencia', 'Improvement', 'Durabilidad', 'Transformación', 'Amplitud térmica', 'Conversación']},
+        consumidor: {color: '#ffdb00', faceText: [' ', '0', 'Portabilidad', 'Extensión de uso', 'Estética', 'Ludicidad', 'Almacenabilidad', '🤡']},
+        sociedad: {color: '#0686cf', faceText: [' ', '0', 'Alianzas', '🤡', 'Beneficios sociales', '🤡', '🤡', '🤡']},
+        planeta:{color: '#70a83b', faceText: [' ', '0', 'Reutilización - Reciclabilidad', '🤡', '🤡', 'Impacto en el ecosistema', '🤡', '🤡']}
       }
     })
 
