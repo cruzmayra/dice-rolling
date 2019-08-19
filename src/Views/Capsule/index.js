@@ -141,7 +141,10 @@ class Capsule extends React.Component {
         dice
       })
     }
+    this.updatePhysics();
   }
+
+
 
   removeDices = () => {
     const { dice } = this.state
@@ -150,6 +153,7 @@ class Capsule extends React.Component {
     } else {
       for (let i = 0; i < dice.length; i++) {
         this.scene.remove(dice[i].getObject())
+        this.setState({dice: []})
       }
     }
     this.updatePhysics();
@@ -157,20 +161,16 @@ class Capsule extends React.Component {
 
   animate = () => {
     this.updatePhysics();
-    this.renderScene();
+    this.renderer.render( this.scene, this.camera )
     window.requestAnimationFrame( this.animate );
   }
 
   updatePhysics = () => {
     const { dice } = this.state
-    this.world.step(1.0 / 40.0);
+    this.world.step(1.0 / 50.0);
     for (var i in dice) {
-        dice[i].updateMeshFromBody();
+      dice[i].updateMeshFromBody();
     }
-  }
-
-  renderScene = () => {
-    this.renderer.render( this.scene, this.camera );
   }
 
   handleThrow = (e) => {
@@ -200,7 +200,9 @@ class Capsule extends React.Component {
         dice[i].getObject().body.angularVelocity.set(20 * Math.random() -10, 20 * Math.random() -10, 20 * Math.random() -10);
         diceValues.push({dice: dice[i], value: i + 1});
       }
+      // DiceManager.prepareValues(diceValues);
     }
+    // window.requestAnimationFrame( this.animate );
   }
 
   handleChange = (e) => {
