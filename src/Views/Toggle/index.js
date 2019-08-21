@@ -3,27 +3,23 @@ import * as CANNON from 'cannon';
 import * as THREE from 'three'
 import {DiceD6Custom, DiceManager} from './../../helpers/customCube'
 
-// Components
-import MultiSelect from  '../Capsule/Components/multiSelect'
-
 class Toggle extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      layers: {},
-      dices: [],
+      layers: [],
       dice: []
     }
   }
 
   componentDidMount () {
     this.setState({
-      layers: {
-        producto: {color: '#ff2164', faceText: [' ', '0', 'Transparencia', 'Improvement', 'Durabilidad', 'Transformación', 'Amplitud térmica', 'Conversación']},
-        consumidor: {color: '#ffdb00', faceText: [' ', '0', 'Portabilidad', 'Extensión de uso', 'Estética', 'Ludicidad', 'Almacenabilidad', '🤡']},
-        sociedad: {color: '#0686cf', faceText: [' ', '0', 'Alianzas', '🤡', 'Beneficios sociales', '🤡', '🤡', '🤡']},
-        planeta:{color: '#70a83b', faceText: [' ', '0', 'Reutilización - Reciclabilidad', '🤡', '🤡', 'Impacto en el ecosistema', '🤡', '🤡']}
-      }
+      layers: [
+        {id: 'producto', color: '#ff2164', faceText: [' ', '0', 'Transparencia', 'Improvement', 'Durabilidad', 'Transformación', 'Amplitud térmica', 'Conversación']},
+        {id:'consumidor', color: '#ffdb00', faceText: [' ', '0', 'Portabilidad', 'Extensión de uso', 'Estética', 'Ludicidad', 'Almacenabilidad', '🤡']},
+        {id:'sociedad', color: '#0686cf', faceText: [' ', '0', 'Alianzas', '🤡', 'Beneficios sociales', '🤡', '🤡', '🤡']},
+        {id:'planeta', color: '#70a83b', faceText: [' ', '0', 'Reutilización - Reciclabilidad', '🤡', '🤡', 'Impacto en el ecosistema', '🤡', '🤡']}
+      ]
     })
 
     this.sceneSetup()
@@ -79,10 +75,10 @@ class Toggle extends React.Component {
       depthWrite: false
     } )
 
-    const wallGeometry1 = new THREE.PlaneGeometry(50, 5, 10, 15);
-    const wallGeometry2 = new THREE.PlaneGeometry(30, 5, 10, 15);
-    const wallGeometry3 = new THREE.PlaneGeometry(50, 5, 10, 15);
-    const wallGeometry4 = new THREE.PlaneGeometry(30, 5, 10, 15);
+    const wallGeometry1 = new THREE.PlaneGeometry(50, 20, 10, 15);
+    const wallGeometry2 = new THREE.PlaneGeometry(30, 20, 10, 15);
+    const wallGeometry3 = new THREE.PlaneGeometry(50, 20, 10, 15);
+    const wallGeometry4 = new THREE.PlaneGeometry(30, 20, 10, 15);
     
     const wall1 = new THREE.Mesh(wallGeometry1, wallMaterial);
     wall1.receiveShadow = true;
@@ -129,63 +125,29 @@ class Toggle extends React.Component {
     floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
     this.world.add(floorBody);
 
-    const wallShape1 = new CANNON.Box(new CANNON.Vec3(50, 5, 2));
+    const wallShape1 = new CANNON.Box(new CANNON.Vec3(50, 20, 2));
     const wallBody1 = new CANNON.Body({ mass: 0 });
     wallBody1.addShape(wallShape1);
     wallBody1.position.set(0, 0, -17);
     this.world.addBody(wallBody1);
 
-    const wallShape2 = new CANNON.Box(new CANNON.Vec3(2, 5, 30));
+    const wallShape2 = new CANNON.Box(new CANNON.Vec3(2, 20, 30));
     const wallBody2 = new CANNON.Body({ mass: 0 });
     wallBody2.addShape(wallShape2);
     wallBody2.position.set(27, 0, 0);
     this.world.addBody(wallBody2);
 
-    const wallShape3 = new CANNON.Box(new CANNON.Vec3(50, 5, 2));
+    const wallShape3 = new CANNON.Box(new CANNON.Vec3(50, 20, 2));
     const wallBody3 = new CANNON.Body({ mass: 0 });
     wallBody3.addShape(wallShape3);
     wallBody3.position.set(0, 0, 17);
     this.world.addBody(wallBody3);
 
-    const wallShape4 = new CANNON.Box(new CANNON.Vec3(2, 5, 30));
+    const wallShape4 = new CANNON.Box(new CANNON.Vec3(2, 20, 30));
     const wallBody4 = new CANNON.Body({ mass: 0 });
     wallBody4.addShape(wallShape4);
     wallBody4.position.set(-27, 0, 0);
     this.world.addBody(wallBody4);
-  }
-
-  dicesSetup = () => {
-    this.removeDices()
-    const { dices } = this.state
-    let dice = []
-    for (let i = 0; i < dices.length; i++) {
-      let die = new DiceD6Custom({
-        size: 4, 
-        backColor: dices[i].color,
-        faceTexts: dices[i].faceText
-      });
-      this.scene.add(die.getObject());
-      dice.push(die);
-      this.setState({
-        dice
-      })
-    }
-    this.updatePhysics();
-  }
-
-
-
-  removeDices = () => {
-    const { dice } = this.state
-    if ( dice.length === 0) {
-      return
-    } else {
-      for (let i = 0; i < dice.length; i++) {
-        this.scene.remove(dice[i].getObject())
-        this.setState({dice: []})
-      }
-    }
-    this.updatePhysics();
   }
 
   animate = () => {
@@ -240,12 +202,12 @@ class Toggle extends React.Component {
 
   singleDiceSetup = (color) => {
     const { layers, dice } = this.state
-    let layer = Object.values(layers).filter(layer => {
+    let layer = layers.filter(layer => {
       return layer.color === color
     })
 
     let die = new DiceD6Custom({
-      size: 4, 
+      size: 4,
       backColor: layer[0].color,
       faceTexts: layer[0].faceText
     })
@@ -290,28 +252,7 @@ class Toggle extends React.Component {
     }
   }
 
-  handleChange = (e) => {
-    const {value} = e.target
-    const {layers, dices} = this.state
-    if (dices.length === 0) {
-      dices.push(layers[value])
-      this.setState({dices})
-      return
-    } else {
-      for(let i = 0; i < dices.length; i++) {
-        if(layers[value] === dices[i]){
-          dices.splice(i,1);
-          this.setState({dices});
-          return;
-        }
-      }
-      dices.push(layers[value]);
-      this.setState({dices});
-    }
-  }
-
   render () {
-    const {dices} = this.state
     return (
       <section id="toggle" ref={ref => (this.el = ref)}></section>
     )
