@@ -60,7 +60,7 @@ class Toggle extends React.Component {
     light.shadow.mapSize.width = 1024;
     light.shadow.mapSize.height = 1024;
 
-    const floorMaterial = new THREE.MeshPhongMaterial( { color: 0xF6E3CE, side: THREE.DoubleSide } );
+    const floorMaterial = new THREE.MeshPhongMaterial( { color: '#0e1518', side: THREE.DoubleSide } );
     const floorGeometry = new THREE.PlaneGeometry(50, 30, 10, 10);
     const floor = new THREE.Mesh(floorGeometry, floorMaterial);
     floor.receiveShadow  = true;
@@ -68,7 +68,7 @@ class Toggle extends React.Component {
 
     const wallMaterial = new THREE.MeshPhongMaterial( { 
       side: THREE.DoubleSide,
-      color: 0xCCCCCC, 
+      color: '#0e1518', 
       transparent: true, 
       opacity: 0.25,
       depthWrite: false

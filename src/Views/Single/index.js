@@ -61,7 +61,7 @@ class Single extends React.Component {
     light.shadow.mapSize.width = 1024;
     light.shadow.mapSize.height = 1024;
 
-    const floorMaterial = new THREE.MeshPhongMaterial( { color: 0xF6E3CE, side: THREE.DoubleSide } );
+    const floorMaterial = new THREE.MeshPhongMaterial( { color: '#0e1518', side: THREE.DoubleSide } );
     const floorGeometry = new THREE.PlaneGeometry(30, 30, 10, 10);
     const floor = new THREE.Mesh(floorGeometry, floorMaterial);
     floor.receiveShadow  = true;
