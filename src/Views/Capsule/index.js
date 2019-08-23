@@ -173,8 +173,6 @@ class Capsule extends React.Component {
     this.updatePhysics();
   }
 
-
-
   removeDices = () => {
     const { dice } = this.state
     if ( dice.length === 0) {

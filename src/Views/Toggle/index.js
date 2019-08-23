@@ -15,13 +15,12 @@ class Toggle extends React.Component {
   componentDidMount () {
     this.setState({
       layers: [
-        {id: 'producto', color: '#ff2164', faceText: [' ', '0', 'Transparencia', 'Improvement', 'Durabilidad', 'Transformación', 'Amplitud térmica', 'Conversación']},
-        {id:'consumidor', color: '#ffdb00', faceText: [' ', '0', 'Portabilidad', 'Extensión de uso', 'Estética', 'Ludicidad', 'Almacenabilidad', '🤡']},
-        {id:'sociedad', color: '#0686cf', faceText: [' ', '0', 'Alianzas', '🤡', 'Beneficios sociales', '🤡', '🤡', '🤡']},
-        {id:'planeta', color: '#70a83b', faceText: [' ', '0', 'Reutilización - Reciclabilidad', '🤡', '🤡', 'Impacto en el ecosistema', '🤡', '🤡']}
+        {id: 'producto', color: '#E43935', faceText: [' ', '0', 'Transparencia', 'Improvement', 'Durabilidad', 'Transformación', 'Amplitud térmica', 'Conversación']},
+        {id:'consumidor', color: '#F8B100', faceText: [' ', '0', 'Portabilidad', 'Extensión de uso', 'Estética', 'Ludicidad', 'Almacenabilidad', '🤡']},
+        {id:'sociedad', color: '#7FB344', faceText: [' ', '0', 'Alianzas', '🤡', 'Beneficios sociales', '🤡', '🤡', '🤡']},
+        {id:'planeta', color: '#01ABC2', faceText: [' ', '0', 'Reutilización - Reciclabilidad', '🤡', '🤡', 'Impacto en el ecosistema', '🤡', '🤡']}
       ]
     })
-
     this.sceneSetup()
     this.buildSceneObjects()
     this.worldSetup()
@@ -151,14 +150,14 @@ class Toggle extends React.Component {
   }
 
   animate = () => {
-    this.updatePhysics();
+    this.updatePhysics()
     this.renderer.render( this.scene, this.camera )
-    window.requestAnimationFrame( this.animate );
+    window.requestAnimationFrame( this.animate )
   }
 
   updatePhysics = () => {
     const { dice } = this.state
-    this.world.step(1.0 / 50.0);
+    this.world.step(1.0 / 60.0);
     for (var i in dice) {
       dice[i].updateMeshFromBody();
     }
@@ -170,16 +169,16 @@ class Toggle extends React.Component {
         this.randomDiceThrow()
       break
       case 37:
-        this.validateDice('#ff2164')
+        this.validateDice('#E43935')
       break
       case 38:
-        this.validateDice('#ffdb00')
+        this.validateDice('#F8B100')
       break
       case 39:
-        this.validateDice('#0686cf')
+        this.validateDice('#7FB344')
       break
       case 40:
-        this.validateDice('#70a83b')
+        this.validateDice('#01ABC2')
       break
       default:
       break
@@ -216,23 +215,23 @@ class Toggle extends React.Component {
     this.setState({
       dice: [...dice,die]
     })
-
-    this.updatePhysics()
   }
 
   singleDiceRemove = ( indx ) => {
     const { dice } = this.state
     this.scene.remove(dice[indx].getObject())
+    this.renderer.renderLists.dispose();
     dice.splice(indx, 1)
     this.setState({
       dice
     })
-    this.updatePhysics();
+
+    // this.updatePhysics()
   }
 
   randomDiceThrow = () => {
     const { dice } = this.state
-    let diceValues = [];
+    // let diceValues = [];
     if(!dice) {
       return
     } else {
@@ -247,14 +246,14 @@ class Toggle extends React.Component {
         let rand = Math.random() * 5;
         dice[i].getObject().body.velocity.set(25 + rand, 40 + yRand, 15 + rand);
         dice[i].getObject().body.angularVelocity.set(20 * Math.random() -10, 20 * Math.random() -10, 20 * Math.random() -10);
-        diceValues.push({dice: dice[i], value: i + 1});
+        // diceValues.push({dice: dice[i], value: i + 1});
       }
     }
   }
 
   render () {
     return (
-      <section id="toggle" ref={ref => (this.el = ref)}></section>
+      <section id="toggle" /* ref={ref => (this.el = ref)} */></section>
     )
   }
 }
