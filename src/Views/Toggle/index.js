@@ -68,9 +68,9 @@ class Toggle extends React.Component {
 
     const wallMaterial = new THREE.MeshPhongMaterial( { 
       side: THREE.DoubleSide,
-      color: '#0e1518', 
+      color: 0x0e1518, 
       transparent: true, 
-      opacity: 0.25,
+      // opacity: 0.95,
       depthWrite: false
     } )
 
