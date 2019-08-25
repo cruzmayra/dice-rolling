@@ -44,27 +44,27 @@ class Toggle extends React.Component {
   }
 
   buildSceneObjects = () => {
-    const ambient = new THREE.AmbientLight('#ffffff', 0.3);
+    const ambient = new THREE.AmbientLight('#ffffff', 0.3)
 
-    const directionalLight = new THREE.DirectionalLight('#ffffff', 0.5);
-    directionalLight.position.x = -1000;
-    directionalLight.position.y = 1000;
-    directionalLight.position.z = 1000;
+    const directionalLight = new THREE.DirectionalLight('#ffffff', 0.5)
+    directionalLight.position.x = -1000
+    directionalLight.position.y = 1000
+    directionalLight.position.z = 1000
 
-    const light = new THREE.SpotLight(0xefdfd5, 0.6);
-    light.position.y = 100;
-    light.target.position.set(0, 0, 0);
-    light.castShadow = true;
-    light.shadow.camera.near = 50;
-    light.shadow.camera.far = 110;
-    light.shadow.mapSize.width = 1024;
-    light.shadow.mapSize.height = 1024;
+    const light = new THREE.SpotLight(0xefdfd5, 0.6)
+    light.position.y = 100
+    light.target.position.set(0, 0, 0)
+    light.castShadow = true
+    light.shadow.camera.near = 50
+    light.shadow.camera.far = 110
+    light.shadow.mapSize.width = 1024
+    light.shadow.mapSize.height = 1024
 
-    const floorMaterial = new THREE.MeshPhongMaterial( { color: '#0e1518', side: THREE.DoubleSide } );
-    const floorGeometry = new THREE.PlaneGeometry(50, 30, 10, 10);
-    const floor = new THREE.Mesh(floorGeometry, floorMaterial);
-    floor.receiveShadow  = true;
-    floor.rotation.x = Math.PI / 2;
+    const floorMaterial = new THREE.MeshPhongMaterial( { color: '#0e1518', side: THREE.DoubleSide } )
+    const floorGeometry = new THREE.PlaneGeometry(50, 30, 10, 10)
+    const floor = new THREE.Mesh(floorGeometry, floorMaterial)
+    floor.receiveShadow  = true
+    floor.rotation.x = Math.PI / 2
 
     const wallMaterial = new THREE.MeshPhongMaterial( { 
       side: THREE.DoubleSide,
@@ -74,12 +74,12 @@ class Toggle extends React.Component {
       depthWrite: false
     } )
 
-    const wallGeometry1 = new THREE.PlaneGeometry(50, 20, 10, 15);
-    const wallGeometry2 = new THREE.PlaneGeometry(30, 20, 10, 15);
-    const wallGeometry3 = new THREE.PlaneGeometry(50, 20, 10, 15);
-    const wallGeometry4 = new THREE.PlaneGeometry(30, 20, 10, 15);
+    const wallGeometry1 = new THREE.PlaneGeometry(50, 20, 10, 15)
+    const wallGeometry2 = new THREE.PlaneGeometry(30, 20, 10, 15)
+    const wallGeometry3 = new THREE.PlaneGeometry(50, 20, 10, 15)
+    const wallGeometry4 = new THREE.PlaneGeometry(30, 20, 10, 15)
     
-    const wall1 = new THREE.Mesh(wallGeometry1, wallMaterial);
+    const wall1 = new THREE.Mesh(wallGeometry1, wallMaterial)
     wall1.receiveShadow = true;
     wall1.translateZ(-15);
     wall1.translateY(2);
@@ -103,9 +103,9 @@ class Toggle extends React.Component {
 
     // SKYBOX/FOG
     const skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
-    const skyBoxMaterial = new THREE.MeshPhongMaterial( { color: 0x9999ff, side: THREE.BackSide } );
+    const skyBoxMaterial = new THREE.MeshPhongMaterial( { color: 0x0e1518, side: THREE.BackSide } );
     const skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
-    this.scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );
+    this.scene.fog = new THREE.FogExp2( 0x0e1518, 0.00025 );
     
     this.scene.add( ambient,directionalLight,light,floor,skyBox,wall1, wall2, wall3, wall4 );
   }
@@ -152,6 +152,7 @@ class Toggle extends React.Component {
   animate = () => {
     this.updatePhysics()
     this.renderer.render( this.scene, this.camera )
+    THREE.Cache.enabled = true
     window.requestAnimationFrame( this.animate )
   }
 
@@ -210,7 +211,6 @@ class Toggle extends React.Component {
       backColor: layer[0].color,
       faceTexts: layer[0].faceText
     })
-
     this.scene.add(die.getObject());
     this.setState({
       dice: [...dice,die]
@@ -218,14 +218,13 @@ class Toggle extends React.Component {
   }
 
   singleDiceRemove = ( indx ) => {
+    THREE.Cache.clear();
     const { dice } = this.state
     this.scene.remove(dice[indx].getObject())
-    this.renderer.renderLists.dispose();
     dice.splice(indx, 1)
     this.setState({
       dice
     })
-
     // this.updatePhysics()
   }
 
