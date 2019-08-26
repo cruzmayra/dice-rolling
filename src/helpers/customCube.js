@@ -353,8 +353,8 @@ class DiceObject {
       let ts = this.calculateTextureSize(this.size / 2 + this.size * this.textMargin) * 2;
       canvas.width = canvas.height = ts;
 
-      let lineheight = 20
-      context.font = "17pt Arial";
+      let lineheight = 18
+      context.font = "600 19px Roboto,sans-serif";
       context.fillStyle = backColor;
       context.fillRect(0, 0, canvas.width, canvas.height);
       context.textAlign = "center";
