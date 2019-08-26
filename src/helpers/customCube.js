@@ -354,7 +354,7 @@ class DiceObject {
       canvas.width = canvas.height = ts;
 
       let lineheight = 18
-      context.font = "600 19px Roboto,sans-serif";
+      context.font = "600 18px Roboto,sans-serif";
       context.fillStyle = backColor;
       context.fillRect(0, 0, canvas.width, canvas.height);
       context.textAlign = "center";
