@@ -353,17 +353,28 @@ class DiceObject {
       let ts = this.calculateTextureSize(this.size / 2 + this.size * this.textMargin) * 2;
       canvas.width = canvas.height = ts;
 
-      let lineheight = 18
-      context.font = "600 18px Roboto,sans-serif";
+      let lineheight = 25
+      context.font = "600 1.7rem Roboto,sans-serif";
       context.fillStyle = backColor;
       context.fillRect(0, 0, canvas.width, canvas.height);
       context.textAlign = "center";
       context.textBaseline = "middle";
       context.fillStyle = color;
-      // context.fillText(text, canvas.width / 2, canvas.height / 2);
+      // 
       let words = text.split(' ');
       for (var i = 0; i<words.length; i++){
-        context.fillText(words[i], canvas.width / 2, canvas.height / 2 + (i*lineheight) );
+        //   console.log(words)
+        if (words.length > 1) {
+          context.fillText(words[i], canvas.width / 2, canvas.height / 2.3 + (i*lineheight) );
+        } else {
+          console.log()
+          if (words[0].length === 2) {
+              context.font = "600 5rem Roboto,sans-serif";
+          } else {
+              context.font = "600 1.7rem Roboto,sans-serif";
+          }
+          context.fillText(text, canvas.width / 2, canvas.height / 2);
+        }
       }
       let texture = new THREE.Texture(canvas);
       texture.needsUpdate = true;

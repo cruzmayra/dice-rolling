@@ -15,10 +15,10 @@ class Toggle extends React.Component {
   componentDidMount () {
     this.setState({
       layers: [
-        {id: 'producto', color: '#E43935', faceText: [' ', '0', 'Transparencia', 'Improvement', 'Durabilidad', 'Transformación', 'Amplitud térmica', 'Conversación']},
-        {id:'consumidor', color: '#F8B100', faceText: [' ', '0', 'Portabilidad', 'Extensión de uso', 'Estética', 'Ludicidad', 'Almacenabilidad', '🤡']},
-        {id:'sociedad', color: '#7FB344', faceText: [' ', '0', 'Alianzas', '🤡', 'Beneficios sociales', '🤡', '🤡', '🤡']},
-        {id:'planeta', color: '#01ABC2', faceText: [' ', '0', 'Reutilización - Reciclabilidad', '🤡', '🤡', 'Impacto en el ecosistema', '🤡', '🤡']}
+        {id: 'producto', color: '#E43935', faceText: [' ', '0', 'Transpa- rencia', 'Impro- vement', 'Durabilidad', 'Transfor- mación', 'Amplitud térmica', 'Conversa- ción']},
+        {id:'consumidor', color: '#F8B100', faceText: [' ', '0', 'Portabilidad', 'Estética', 'Ludicidad', 'Extensión de uso', 'Almacena- bilidad', '🃏']},
+        {id:'sociedad', color: '#7FB344', faceText: [' ', '0', 'Alianzas', '🃏', 'Beneficios sociales', '🃏', '🃏', '🃏']},
+        {id:'planeta', color: '#01ABC2', faceText: [' ', '0', 'Reutilización - Reciclabili- dad', '🃏', '🃏', 'Impacto en ecosistema', '🃏', '🃏']}
       ]
     })
     this.sceneSetup()
