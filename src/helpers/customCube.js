@@ -105,7 +105,7 @@ class DiceObject {
         this.materialOptions = {
             specular: 0x172022,
             color: 0xf0f0f0,
-            shininess: 40,
+            shininess: 90,
             shading: THREE.FlatShading,
         };
         this.labelColor = options.fontColor;

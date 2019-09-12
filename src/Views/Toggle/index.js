@@ -15,10 +15,10 @@ class Toggle extends React.Component {
   componentDidMount () {
     this.setState({
       layers: [
-        {id: 'producto', color: '#E43935', faceText: [' ', '0', 'Transpa- rencia', 'Impro- vement', 'Durabilidad', 'Transfor- mación', 'Amplitud térmica', 'Conversa- ción']},
-        {id:'consumidor', color: '#F8B100', faceText: [' ', '0', 'Portabilidad', 'Estética', 'Ludicidad', 'Extensión de uso', 'Almacena- bilidad', '🃏']},
-        {id:'sociedad', color: '#7FB344', faceText: [' ', '0', 'Alianzas', '🃏', 'Beneficios sociales', '🃏', '🃏', '🃏']},
-        {id:'planeta', color: '#01ABC2', faceText: [' ', '0', 'Reutilización - Reciclabili- dad', '🃏', '🃏', 'Impacto en ecosistema', '🃏', '🃏']}
+        {id: 'producto', color: '#E43935', faceText: [' ', '0', 'Transparen- cia', 'Enhan- cement', 'Durabilidad', 'Transforma- ción', 'Amplitud térmica', 'Conversa- ción']},
+        {id:'consumidor', color: '#F8B100', faceText: [' ', '0', 'Transparen- cia', 'Enhan- cement', 'Durabilidad', 'Transforma- ción', 'Amplitud térmica', 'Conversa- ción']},
+        {id:'sociedad', color: '#7FB344', faceText: [' ', '0', 'Transparen- cia', 'Enhan- cement', 'Durabilidad', 'Transforma- ción', 'Amplitud térmica', 'Conversa- ción']},
+        {id:'planeta', color: '#01ABC2', faceText: [' ', '0', 'Plástico', 'Cartón', 'Aluminio', 'Tetrapack', 'Pouch', 'Vidrio']}
       ]
     })
     this.sceneSetup()
@@ -44,14 +44,14 @@ class Toggle extends React.Component {
   }
 
   buildSceneObjects = () => {
-    const ambient = new THREE.AmbientLight('#ffffff', 0.3)
+    const ambient = new THREE.AmbientLight('#ffffff', 0.5)
 
     const directionalLight = new THREE.DirectionalLight('#ffffff', 0.5)
     directionalLight.position.x = -1000
     directionalLight.position.y = 1000
     directionalLight.position.z = 1000
 
-    const light = new THREE.SpotLight(0xefdfd5, 0.6)
+    const light = new THREE.SpotLight(0xefdfd5, 0.4)
     light.position.y = 100
     light.target.position.set(0, 0, 0)
     light.castShadow = true
@@ -60,7 +60,7 @@ class Toggle extends React.Component {
     light.shadow.mapSize.width = 1024
     light.shadow.mapSize.height = 1024
 
-    const floorMaterial = new THREE.MeshPhongMaterial( { color: '#0e1518', side: THREE.DoubleSide } )
+    const floorMaterial = new THREE.MeshPhongMaterial( { color: '#efefef', side: THREE.DoubleSide } )
     const floorGeometry = new THREE.PlaneGeometry(50, 30, 10, 10)
     const floor = new THREE.Mesh(floorGeometry, floorMaterial)
     floor.receiveShadow  = true
@@ -68,7 +68,7 @@ class Toggle extends React.Component {
 
     const wallMaterial = new THREE.MeshPhongMaterial( { 
       side: THREE.DoubleSide,
-      color: 0x0e1518, 
+      color: 0XFFFFFF, 
       transparent: true, 
       // opacity: 0.95,
       depthWrite: false
