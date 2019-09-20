@@ -402,7 +402,8 @@ class DiceObject {
 
     create() {
         if (!DiceManager.world) throw new Error('You must call DiceManager.setWorld(world) first.');
-        this.object = new THREE.Mesh(this.getGeometry(), new THREE.MultiMaterial(this.getMaterials()));
+        let material = new THREE.MultiMaterial(this.getMaterials())
+        this.object = new THREE.Mesh(this.getGeometry(), material);
 
         this.object.reveiceShadow = true;
         this.object.castShadow = true;
@@ -417,6 +418,13 @@ class DiceObject {
         DiceManager.world.add(this.object.body);
 
         return this.object;
+    }
+
+    remove () {
+      this.getGeometry().dispose()
+      this.material.dispose()
+      this.texture.dispose()
+    //   DiceManager.world.remove(this.object)
     }
 
     updateMeshFromBody() {
@@ -451,6 +459,10 @@ export class DiceD6Custom extends DiceObject {
         this.inertia = 13;
 
         this.create();
+    }
+
+    eliminar() {
+      return this.remove();
     }
 }
 

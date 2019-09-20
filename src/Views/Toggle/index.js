@@ -152,7 +152,7 @@ class Toggle extends React.Component {
   animate = () => {
     this.updatePhysics()
     this.renderer.render( this.scene, this.camera )
-    THREE.Cache.enabled = true
+    // THREE.Cache.enabled = true
     window.requestAnimationFrame( this.animate )
   }
 
@@ -218,9 +218,12 @@ class Toggle extends React.Component {
   }
 
   singleDiceRemove = ( indx ) => {
-    THREE.Cache.clear();
     const { dice } = this.state
     this.scene.remove(dice[indx].getObject())
+    dice[indx].getObject().remove()
+
+    // DiceManager.world.remove(dice[indx].getObject())
+    THREE.Cache.clear()
     dice.splice(indx, 1)
     this.setState({
       dice
